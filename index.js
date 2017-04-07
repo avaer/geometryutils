@@ -1,4 +1,4 @@
-const LRUMap = require('lru_map');
+const LRUMap = require('lru_map').LRUMap;
 const functionutils = require('functionutils');
 
 const BOX_TARGET_CACHE_SIZE = 128;
