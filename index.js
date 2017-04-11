@@ -2,6 +2,7 @@ const LRUMap = require('lru_map').LRUMap;
 const functionutils = require('functionutils');
 
 const BOX_TARGET_CACHE_SIZE = 128;
+const CONTROLLER_LINE_LENGTH = 15;
 
 module.exports = ({THREE}) => {
   class BoxTarget {
@@ -759,18 +760,17 @@ module.exports = ({THREE}) => {
     };
   })(); */
 
-  const makeControllerLine = (position, rotation) => {
-    if (rotation) {
-      return new THREE.Line3(
-        position.clone(),
-        position.clone().add(new THREE.Vector3(0, 0, -1).applyQuaternion(rotation).multiplyScalar(15))
-      );
-    } else {
-      return new THREE.Line3(
-        position.clone().add(new THREE.Vector3(0, 0, 1).applyQuaternion(rotation).multiplyScalar(worldDepth / 2)),
-        position.clone().add(new THREE.Vector3(0, 0, -1).applyQuaternion(rotation).multiplyScalar(worldDepth / 2))
-      );
-    }
+  const makeControllerLine = (position, rotation, scale) => {
+    const basePosition = position.clone().multiply(scale);
+
+    return new THREE.Line3(
+      basePosition.clone(),
+      basePosition.clone().add(
+        new THREE.Vector3(0, 0, -CONTROLLER_LINE_LENGTH)
+          .multiply(scale)
+          .applyQuaternion(rotation)
+        )
+    );
   };
 
   const boxTargetCache = new LRUMap(BOX_TARGET_CACHE_SIZE);
