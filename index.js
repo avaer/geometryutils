@@ -129,9 +129,10 @@ module.exports = ({THREE}) => {
   }
 
   class PlaneTarget {
-    constructor(position, quaternion, width, height) {
+    constructor(position, quaternion, scale, width, height) {
       this.position = position;
       this.quaternion = quaternion;
+      this.scale = scale;
       this.width = width;
       this.height = height;
 
@@ -142,20 +143,20 @@ module.exports = ({THREE}) => {
       this.plane = plane;
       const lines = {
         left: new THREE.Line3(
-          position.clone().add(new THREE.Vector3(-width / 2, -height / 2, 0).applyQuaternion(quaternion)),
-          position.clone().add(new THREE.Vector3(-width / 2, height / 2, 0).applyQuaternion(quaternion))
+          position.clone().add(new THREE.Vector3(-width / 2, -height / 2, 0).multiply(scale).applyQuaternion(quaternion)),
+          position.clone().add(new THREE.Vector3(-width / 2, height / 2, 0).multiply(scale).applyQuaternion(quaternion))
         ),
         right: new THREE.Line3(
-          position.clone().add(new THREE.Vector3(width / 2, -height / 2, 0).applyQuaternion(quaternion)),
-          position.clone().add(new THREE.Vector3(width / 2, height / 2, 0).applyQuaternion(quaternion))
+          position.clone().add(new THREE.Vector3(width / 2, -height / 2, 0).multiply(scale).applyQuaternion(quaternion)),
+          position.clone().add(new THREE.Vector3(width / 2, height / 2, 0).multiply(scale).applyQuaternion(quaternion))
         ),
         top: new THREE.Line3(
-          position.clone().add(new THREE.Vector3(-width / 2, height / 2, 0).applyQuaternion(quaternion)),
-          position.clone().add(new THREE.Vector3(width / 2, height / 2, 0).applyQuaternion(quaternion))
+          position.clone().add(new THREE.Vector3(-width / 2, height / 2, 0).multiply(scale).applyQuaternion(quaternion)),
+          position.clone().add(new THREE.Vector3(width / 2, height / 2, 0).multiply(scale).applyQuaternion(quaternion))
         ),
         bottom: new THREE.Line3(
-          position.clone().add(new THREE.Vector3(-width / 2, -height / 2, 0).applyQuaternion(quaternion)),
-          position.clone().add(new THREE.Vector3(width / 2, -height / 2, 0).applyQuaternion(quaternion))
+          position.clone().add(new THREE.Vector3(-width / 2, -height / 2, 0).multiply(scale).applyQuaternion(quaternion)),
+          position.clone().add(new THREE.Vector3(width / 2, -height / 2, 0).multiply(scale).applyQuaternion(quaternion))
         ),
       };
       this.lines = lines;
@@ -799,7 +800,7 @@ module.exports = ({THREE}) => {
     const newSize = new THREE.Vector3(Math.abs(start.x - end.x), Math.abs(start.y - end.y), Math.abs(start.z - end.z));
     return makeBoxTarget(newPosition, rotation, scale, newSize);
   };
-  const makePlaneTarget = (position, quaternion, width, height) => new PlaneTarget(position, quaternion, width, height);
+  const makePlaneTarget = (position, quaternion, scale, width, height) => new PlaneTarget(position, quaternion, scale, width, height);
 
   return {
     unindexBufferGeometry,
