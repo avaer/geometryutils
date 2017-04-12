@@ -14,75 +14,75 @@ module.exports = ({THREE}) => {
 
       const leftPlane = new THREE.Plane().setFromNormalAndCoplanarPoint(
         new THREE.Vector3(-1, 0, 0).applyQuaternion(quaternion),
-        position.clone().add(new THREE.Vector3(-size.x / 2, 0, 0).applyQuaternion(quaternion))
+        position.clone().add(new THREE.Vector3(-size.x / 2, 0, 0).multiply(scale).applyQuaternion(quaternion))
       );
       leftPlane.xAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(-size.x / 2, 0, -size.z / 2).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(-size.x / 2, 0, size.z / 2).applyQuaternion(quaternion))
+        position.clone().add(new THREE.Vector3(-size.x / 2, 0, -size.z / 2).multiply(scale).applyQuaternion(quaternion)),
+        position.clone().add(new THREE.Vector3(-size.x / 2, 0, size.z / 2).multiply(scale).applyQuaternion(quaternion))
       );
       leftPlane.yAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(-size.x / 2, -size.y / 2, 0).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(-size.x / 2, size.y /2, 0).applyQuaternion(quaternion))
+        position.clone().add(new THREE.Vector3(-size.x / 2, -size.y / 2, 0).multiply(scale).applyQuaternion(quaternion)),
+        position.clone().add(new THREE.Vector3(-size.x / 2, size.y /2, 0).multiply(scale).applyQuaternion(quaternion))
       );
       const rightPlane = new THREE.Plane().setFromNormalAndCoplanarPoint(
         new THREE.Vector3(1, 0, 0).applyQuaternion(quaternion),
-        position.clone().add(new THREE.Vector3(size.x / 2, 0, 0).applyQuaternion(quaternion))
+        position.clone().add(new THREE.Vector3(size.x / 2, 0, 0).multiply(scale).applyQuaternion(quaternion))
       );
       rightPlane.xAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(size.x / 2, 0, -size.z / 2).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(size.x / 2, 0, size.z / 2).applyQuaternion(quaternion))
+        position.clone().add(new THREE.Vector3(size.x / 2, 0, -size.z / 2).multiply(scale).applyQuaternion(quaternion)),
+        position.clone().add(new THREE.Vector3(size.x / 2, 0, size.z / 2).multiply(scale).applyQuaternion(quaternion))
       );
       rightPlane.yAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(size.x / 2, -size.y / 2, 0).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(size.x / 2, size.y / 2, 0).applyQuaternion(quaternion))
+        position.clone().add(new THREE.Vector3(size.x / 2, -size.y / 2, 0).multiply(scale).applyQuaternion(quaternion)),
+        position.clone().add(new THREE.Vector3(size.x / 2, size.y / 2, 0).multiply(scale).applyQuaternion(quaternion))
       );
       const topPlane = new THREE.Plane().setFromNormalAndCoplanarPoint(
         new THREE.Vector3(0, 1, 0).applyQuaternion(quaternion),
-        position.clone().add(new THREE.Vector3(0, size.y / 2, 0).applyQuaternion(quaternion))
+        position.clone().add(new THREE.Vector3(0, size.y / 2, 0).multiply(scale).applyQuaternion(quaternion))
       );
       topPlane.xAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(-size.x / 2, size.y / 2, 0).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(size.x / 2, size.y / 2, 0).applyQuaternion(quaternion))
+        position.clone().add(new THREE.Vector3(-size.x / 2, size.y / 2, 0).multiply(scale).applyQuaternion(quaternion)),
+        position.clone().add(new THREE.Vector3(size.x / 2, size.y / 2, 0).multiply(scale).applyQuaternion(quaternion))
       );
       topPlane.yAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(0, size.y / 2, -size.z / 2).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(0, size.y / 2, size.z / 2).applyQuaternion(quaternion))
+        position.clone().add(new THREE.Vector3(0, size.y / 2, -size.z / 2).multiply(scale).applyQuaternion(quaternion)),
+        position.clone().add(new THREE.Vector3(0, size.y / 2, size.z / 2).multiply(scale).applyQuaternion(quaternion))
       );
       const bottomPlane = new THREE.Plane().setFromNormalAndCoplanarPoint(
         new THREE.Vector3(0, -1, 0).applyQuaternion(quaternion),
-        position.clone().add(new THREE.Vector3(0, -size.y / 2, 0).applyQuaternion(quaternion))
+        position.clone().add(new THREE.Vector3(0, -size.y / 2, 0).multiply(scale).applyQuaternion(quaternion))
       );
       bottomPlane.xAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(-size.x / 2, -size.y / 2, 0).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(size.x / 2, -size.y / 2, 0).applyQuaternion(quaternion))
+        position.clone().add(new THREE.Vector3(-size.x / 2, -size.y / 2, 0).multiply(scale).applyQuaternion(quaternion)),
+        position.clone().add(new THREE.Vector3(size.x / 2, -size.y / 2, 0).multiply(scale).applyQuaternion(quaternion))
       );
       bottomPlane.yAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(0, -size.y / 2, -size.z / 2).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(0, -size.y / 2, size.z / 2).applyQuaternion(quaternion))
+        position.clone().add(new THREE.Vector3(0, -size.y / 2, -size.z / 2).multiply(scale).applyQuaternion(quaternion)),
+        position.clone().add(new THREE.Vector3(0, -size.y / 2, size.z / 2).multiply(scale).applyQuaternion(quaternion))
       );
       const frontPlane = new THREE.Plane().setFromNormalAndCoplanarPoint(
         new THREE.Vector3(0, 0, 1).applyQuaternion(quaternion),
-        position.clone().add(new THREE.Vector3(0, 0, size.z / 2).applyQuaternion(quaternion))
+        position.clone().add(new THREE.Vector3(0, 0, size.z / 2).multiply(scale).applyQuaternion(quaternion))
       );
       frontPlane.xAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(-size.x / 2, 0, size.z / 2).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(size.x / 2, 0, size.z / 2).applyQuaternion(quaternion))
+        position.clone().add(new THREE.Vector3(-size.x / 2, 0, size.z / 2).multiply(scale).applyQuaternion(quaternion)),
+        position.clone().add(new THREE.Vector3(size.x / 2, 0, size.z / 2).multiply(scale).applyQuaternion(quaternion))
       );
       frontPlane.yAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(0, -size.y / 2, size.z / 2).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(0, size.y / 2, size.z / 2).applyQuaternion(quaternion))
+        position.clone().add(new THREE.Vector3(0, -size.y / 2, size.z / 2).multiply(scale).applyQuaternion(quaternion)),
+        position.clone().add(new THREE.Vector3(0, size.y / 2, size.z / 2).multiply(scale).applyQuaternion(quaternion))
       );
       const backPlane = new THREE.Plane().setFromNormalAndCoplanarPoint(
         new THREE.Vector3(0, 0, -1).applyQuaternion(quaternion),
-        position.clone().add(new THREE.Vector3(0, 0, -size.z / 2).applyQuaternion(quaternion))
+        position.clone().add(new THREE.Vector3(0, 0, -size.z / 2).multiply(scale).applyQuaternion(quaternion))
       );
       backPlane.xAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(-size.x / 2, 0, -size.z / 2).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(size.x / 2, 0, -size.z / 2).applyQuaternion(quaternion))
+        position.clone().add(new THREE.Vector3(-size.x / 2, 0, -size.z / 2).multiply(scale).applyQuaternion(quaternion)),
+        position.clone().add(new THREE.Vector3(size.x / 2, 0, -size.z / 2).multiply(scale).applyQuaternion(quaternion))
       );
       backPlane.yAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(0, -size.y / 2, -size.z / 2).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(0, size.y / 2, -size.z / 2).applyQuaternion(quaternion))
+        position.clone().add(new THREE.Vector3(0, -size.y / 2, -size.z / 2).multiply(scale).applyQuaternion(quaternion)),
+        position.clone().add(new THREE.Vector3(0, size.y / 2, -size.z / 2).multiply(scale).applyQuaternion(quaternion))
       );
       this.planes = [
         leftPlane,
