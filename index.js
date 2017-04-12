@@ -791,10 +791,10 @@ module.exports = ({THREE}) => {
   };
   const makeBoxTargetOffset = (position, rotation, scale, start, end) => {
     const topLeft = position.clone().add(
-      start.clone().applyQuaternion(rotation)
+      start.clone().multiply(scale).applyQuaternion(rotation)
     );
     const bottomRight = position.clone().add(
-      end.clone().applyQuaternion(rotation)
+      end.clone().multiply(scale).applyQuaternion(rotation)
     );
     const newPosition = new THREE.Vector3((topLeft.x + bottomRight.x) / 2, (topLeft.y + bottomRight.y) / 2, (topLeft.z + bottomRight.z) / 2);
     const newSize = new THREE.Vector3(Math.abs(start.x - end.x), Math.abs(start.y - end.y), Math.abs(start.z - end.z));
