@@ -9,122 +9,51 @@ module.exports = ({THREE}) => {
     constructor(position, quaternion, scale, size) {
       this.position = position;
       this.quaternion = quaternion;
+      this.quaternionInverse = quaternion.clone().inverse();
       this.scale = scale;
       this.size = size;
 
-      const leftPlane = new THREE.Plane().setFromNormalAndCoplanarPoint(
-        new THREE.Vector3(-1, 0, 0).applyQuaternion(quaternion),
-        position.clone().add(new THREE.Vector3(-size.x / 2, 0, 0).multiply(scale).applyQuaternion(quaternion))
+      const halfScale = scale.clone().divideScalar(2);
+      this.box = new THREE.Box3(
+        position.clone().sub(size.clone().multiply(halfScale)),
+        position.clone().add(size.clone().multiply(halfScale))
       );
-      leftPlane.xAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(-size.x / 2, 0, -size.z / 2).multiply(scale).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(-size.x / 2, 0, size.z / 2).multiply(scale).applyQuaternion(quaternion))
-      );
-      leftPlane.yAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(-size.x / 2, -size.y / 2, 0).multiply(scale).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(-size.x / 2, size.y /2, 0).multiply(scale).applyQuaternion(quaternion))
-      );
-      const rightPlane = new THREE.Plane().setFromNormalAndCoplanarPoint(
-        new THREE.Vector3(1, 0, 0).applyQuaternion(quaternion),
-        position.clone().add(new THREE.Vector3(size.x / 2, 0, 0).multiply(scale).applyQuaternion(quaternion))
-      );
-      rightPlane.xAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(size.x / 2, 0, -size.z / 2).multiply(scale).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(size.x / 2, 0, size.z / 2).multiply(scale).applyQuaternion(quaternion))
-      );
-      rightPlane.yAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(size.x / 2, -size.y / 2, 0).multiply(scale).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(size.x / 2, size.y / 2, 0).multiply(scale).applyQuaternion(quaternion))
-      );
-      const topPlane = new THREE.Plane().setFromNormalAndCoplanarPoint(
-        new THREE.Vector3(0, 1, 0).applyQuaternion(quaternion),
-        position.clone().add(new THREE.Vector3(0, size.y / 2, 0).multiply(scale).applyQuaternion(quaternion))
-      );
-      topPlane.xAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(-size.x / 2, size.y / 2, 0).multiply(scale).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(size.x / 2, size.y / 2, 0).multiply(scale).applyQuaternion(quaternion))
-      );
-      topPlane.yAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(0, size.y / 2, -size.z / 2).multiply(scale).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(0, size.y / 2, size.z / 2).multiply(scale).applyQuaternion(quaternion))
-      );
-      const bottomPlane = new THREE.Plane().setFromNormalAndCoplanarPoint(
-        new THREE.Vector3(0, -1, 0).applyQuaternion(quaternion),
-        position.clone().add(new THREE.Vector3(0, -size.y / 2, 0).multiply(scale).applyQuaternion(quaternion))
-      );
-      bottomPlane.xAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(-size.x / 2, -size.y / 2, 0).multiply(scale).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(size.x / 2, -size.y / 2, 0).multiply(scale).applyQuaternion(quaternion))
-      );
-      bottomPlane.yAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(0, -size.y / 2, -size.z / 2).multiply(scale).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(0, -size.y / 2, size.z / 2).multiply(scale).applyQuaternion(quaternion))
-      );
-      const frontPlane = new THREE.Plane().setFromNormalAndCoplanarPoint(
-        new THREE.Vector3(0, 0, 1).applyQuaternion(quaternion),
-        position.clone().add(new THREE.Vector3(0, 0, size.z / 2).multiply(scale).applyQuaternion(quaternion))
-      );
-      frontPlane.xAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(-size.x / 2, 0, size.z / 2).multiply(scale).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(size.x / 2, 0, size.z / 2).multiply(scale).applyQuaternion(quaternion))
-      );
-      frontPlane.yAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(0, -size.y / 2, size.z / 2).multiply(scale).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(0, size.y / 2, size.z / 2).multiply(scale).applyQuaternion(quaternion))
-      );
-      const backPlane = new THREE.Plane().setFromNormalAndCoplanarPoint(
-        new THREE.Vector3(0, 0, -1).applyQuaternion(quaternion),
-        position.clone().add(new THREE.Vector3(0, 0, -size.z / 2).multiply(scale).applyQuaternion(quaternion))
-      );
-      backPlane.xAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(-size.x / 2, 0, -size.z / 2).multiply(scale).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(size.x / 2, 0, -size.z / 2).multiply(scale).applyQuaternion(quaternion))
-      );
-      backPlane.yAxis = new THREE.Line3(
-        position.clone().add(new THREE.Vector3(0, -size.y / 2, -size.z / 2).multiply(scale).applyQuaternion(quaternion)),
-        position.clone().add(new THREE.Vector3(0, size.y / 2, -size.z / 2).multiply(scale).applyQuaternion(quaternion))
-      );
-      this.planes = [
-        leftPlane,
-        rightPlane,
-        topPlane,
-        bottomPlane,
-        frontPlane,
-        backPlane,
-      ];
+    }
+
+    getRelativePoint(point) {
+      const {position, quaternionInverse} = this;
+      return point.clone()
+        .sub(position)
+        .applyQuaternion(quaternionInverse)
+        .add(position);
+    }
+
+    getUnrelativePoint(point) {
+      const {position, quaternion} = this;
+      return point.clone()
+        .sub(position)
+        .applyQuaternion(quaternion)
+        .add(position);
     }
 
     intersectLine(line) {
-      const intersectionPoints = [];
+      const {start, end} = line;
+      const relativeStart = this.getRelativePoint(start);
+      const relativeEnd = this.getRelativePoint(end);
+      const relativeRay = new THREE.Ray(relativeStart, relativeEnd.clone().sub(relativeStart));
 
-      for (let i = 0; i < 6; i++) {
-        const plane = this.planes[i];
-        const intersectionPoint = plane.intersectLine(line);
-        if (
-          intersectionPoint &&
-          intersectionPoint.distanceTo(plane.xAxis.closestPointToPoint(intersectionPoint, false)) < (plane.yAxis.distance() / 2) &&
-          intersectionPoint.distanceTo(plane.yAxis.closestPointToPoint(intersectionPoint, false)) < (plane.xAxis.distance() / 2)
-        ) {
-          intersectionPoints.push(intersectionPoint);
-        }
-      }
-
-      if (intersectionPoints.length > 0) {
-        return intersectionPoints
-          .map(intersectionPoint => ({
-            intersectionPoint,
-            distance: line.start.distanceTo(intersectionPoint),
-          }))
-          .sort((a, b) => a.distance - b.distance)[0].intersectionPoint;
+      const {box} = this;
+      const relativeIntersectionPoint = relativeRay.intersectBox(box);
+      if (relativeIntersectionPoint) {
+        const unrelativeIntersectionPoint = this.getUnrelativePoint(relativeIntersectionPoint);
+        return unrelativeIntersectionPoint;
       } else {
         return null;
       }
     }
 
     containsPoint(point) {
-      const innerLine = new THREE.Line3(point, this.position);
-      const outerLine = new THREE.Line3(this.position.clone().add(point.clone().sub(this.position).normalize()), this.position);
-      return this.intersectLine(innerLine) === null && this.intersectLine(outerLine) !== null;
+      return this.box.containsPoint(this.getRelativePoint(point));
     }
   }
 
