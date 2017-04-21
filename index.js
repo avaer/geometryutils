@@ -1,7 +1,5 @@
-const LRUMap = require('lru_map').LRUMap;
 const functionutils = require('functionutils');
 
-const BOX_TARGET_CACHE_SIZE = 128;
 const CONTROLLER_LINE_LENGTH = 15;
 
 module.exports = ({THREE}) => {
@@ -703,21 +701,7 @@ module.exports = ({THREE}) => {
     );
   };
 
-  const boxTargetCache = new LRUMap(BOX_TARGET_CACHE_SIZE);
-  const makeBoxTarget = (position, rotation, scale, size) => {
-    const key = [
-      position.x, position.y, position.z,
-      rotation.x, rotation.y, rotation.z, rotation.w,
-      scale.x, scale.y, scale.z,
-      size.x, size.y, size.z,
-    ].join(':');
-    let entry = boxTargetCache.get(size);
-    if (!entry) {
-      entry = new BoxTarget(position, rotation, scale, size);
-      boxTargetCache.set(key, entry);
-    }
-    return entry;
-  };
+  const makeBoxTarget = (position, rotation, scale, size) => new BoxTarget(position, rotation, scale, size);
   const makeBoxTargetOffset = (position, rotation, scale, start, end) => {
     const topLeft = position.clone().add(
       start.clone().multiply(scale).applyQuaternion(rotation)
