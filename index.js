@@ -689,11 +689,9 @@ module.exports = ({THREE}) => {
   })(); */
 
   const makeControllerLine = (position, rotation, scale) => {
-    const basePosition = position.clone().multiply(scale);
-
     return new THREE.Line3(
-      basePosition.clone(),
-      basePosition.clone().add(
+      position.clone(),
+      position.clone().add(
         new THREE.Vector3(0, 0, -CONTROLLER_LINE_LENGTH)
           .multiply(scale)
           .applyQuaternion(rotation)
