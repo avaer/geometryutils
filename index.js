@@ -3,7 +3,7 @@ const functionutils = require('functionutils');
 const CONTROLLER_LINE_LENGTH = 15;
 
 module.exports = ({THREE}) => {
-  class BoxTarget {
+  /* class BoxTarget {
     constructor(position, quaternion, scale, size) {
       this.position = position;
       this.quaternion = quaternion;
@@ -53,7 +53,7 @@ module.exports = ({THREE}) => {
     containsPoint(point) {
       return this.box.containsPoint(this.getRelativePoint(point));
     }
-  }
+  } */
 
   class PlaneTarget {
     constructor(position, quaternion, scale, width, height) {
@@ -720,7 +720,7 @@ module.exports = ({THREE}) => {
     );
   };
 
-  const makeBoxTarget = (position, rotation, scale, size) => new BoxTarget(position, rotation, scale, size);
+  /* const makeBoxTarget = (position, rotation, scale, size) => new BoxTarget(position, rotation, scale, size);
   const makeBoxTargetOffset = (position, rotation, scale, start, end) => {
     const topLeft = position.clone().add(
       start.clone().multiply(scale).applyQuaternion(rotation)
@@ -731,7 +731,7 @@ module.exports = ({THREE}) => {
     const newPosition = new THREE.Vector3((topLeft.x + bottomRight.x) / 2, (topLeft.y + bottomRight.y) / 2, (topLeft.z + bottomRight.z) / 2);
     const newSize = new THREE.Vector3(Math.abs(start.x - end.x), Math.abs(start.y - end.y), Math.abs(start.z - end.z));
     return makeBoxTarget(newPosition, rotation, scale, newSize);
-  };
+  }; */
   const makePlaneTarget = (position, quaternion, scale, width, height) => new PlaneTarget(position, quaternion, scale, width, height);
 
   return {
@@ -740,8 +740,8 @@ module.exports = ({THREE}) => {
     concatBufferGeometry,
     // sliceBufferGeometry,
     makeControllerLine,
-    makeBoxTarget,
-    makeBoxTargetOffset,
+    // makeBoxTarget,
+    // makeBoxTargetOffset,
     makePlaneTarget,
   };
 };
