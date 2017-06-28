@@ -148,33 +148,54 @@ module.exports = ({THREE}) => {
     if (geometry.index) {
       const indexes = geometry.index.array;
       const numIndexes = indexes.length;
-      const oldVertices = geometry.getAttribute('position').array;
-      const vertices = new Float32Array(numIndexes * 3);
-      const oldNormals = geometry.getAttribute('normal').array;
-      const normals = new Float32Array(numIndexes * 3);
-      const oldUvs = geometry.getAttribute('uv').array;
-      const uvs = new Float32Array(numIndexes * 2);
+      const positionAttribute = geometry.getAttribute('position');
+      const oldPositions = positionAttribute ? positionAttribute.array : null;
+      const positions = positionAttribute ? new Float32Array(numIndexes * 3) : null;
+      const normalAttribute = geometry.getAttribute('normal');
+      const oldNormals = normalAttribute ? normalAttribute.array : null;
+      const normals = normalAttribute ? new Float32Array(numIndexes * 3) : null;
+      const colorAttribute = geometry.getAttribute('color');
+      const oldColors = colorAttribute ? colorAttribute.array : null;
+      const colors = colorAttribute ? new Float32Array(numIndexes * 3) : null;
+      const uvAttribute = geometry.getAttribute('uv');
+      const oldUvs = uvAttribute ? uvAttribute.array : null;
+      const uvs = uvAttribute ? new Float32Array(numIndexes * 2) : null;
       for (let i = 0; i < numIndexes; i++) {
         const index = indexes[i];
 
-        vertices[(i * 3) + 0] = oldVertices[(index * 3) + 0];
-        vertices[(i * 3) + 1] = oldVertices[(index * 3) + 1];
-        vertices[(i * 3) + 2] = oldVertices[(index * 3) + 2];
-
-        normals[(i * 3) + 0] = oldNormals[(index * 3) + 0];
-        normals[(i * 3) + 1] = oldNormals[(index * 3) + 1];
-        normals[(i * 3) + 2] = oldNormals[(index * 3) + 2];
-
-        uvs[(i * 2) + 0] = oldUvs[(index * 2) + 0];
-        uvs[(i * 2) + 1] = oldUvs[(index * 2) + 1];
+        if (positions !== null) {
+          positions[(i * 3) + 0] = oldPositions[(index * 3) + 0];
+          positions[(i * 3) + 1] = oldPositions[(index * 3) + 1];
+          positions[(i * 3) + 2] = oldPositions[(index * 3) + 2];
+        }
+        if (normals !== null) {
+          normals[(i * 3) + 0] = oldNormals[(index * 3) + 0];
+          normals[(i * 3) + 1] = oldNormals[(index * 3) + 1];
+          normals[(i * 3) + 2] = oldNormals[(index * 3) + 2];
+        }
+        if (colors !== null) {
+          colors[(i * 3) + 0] = oldColors[(index * 3) + 0];
+          colors[(i * 3) + 1] = oldColors[(index * 3) + 1];
+          colors[(i * 3) + 2] = oldColors[(index * 3) + 2];
+        }
+        if (uvs !== null) {
+          uvs[(i * 2) + 0] = oldUvs[(index * 2) + 0];
+          uvs[(i * 2) + 1] = oldUvs[(index * 2) + 1];
+        }
       }
-      geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
-      geometry.addAttribute('normal', new THREE.BufferAttribute(normals, 3));
-      geometry.addAttribute('uv', new THREE.BufferAttribute(uvs, 2));
-      // geometry.removeAttribute('normal');
-      // geometry.removeAttribute('uv');
+      if (positions !== null) {
+        geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
+      }
+      if (normals !== null) {
+        geometry.addAttribute('normal', new THREE.BufferAttribute(normals, 3));
+      }
+      if (colors !== null) {
+        geometry.addAttribute('color', new THREE.BufferAttribute(colors, 3));
+      }
+      if (uvs !== null) {
+        geometry.addAttribute('uv', new THREE.BufferAttribute(uvs, 2));
+      }
       geometry.index = null;
-      // geometry.computeVertexNormals();
     }
 
     return geometry;
