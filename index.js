@@ -3,7 +3,7 @@ const functionutils = require('functionutils');
 const CONTROLLER_LINE_LENGTH = 15;
 
 module.exports = ({THREE}) => {
-  /* class BoxTarget {
+  class BoxTarget {
     constructor(position, quaternion, scale, size) {
       this.position = position;
       this.quaternion = quaternion;
@@ -26,13 +26,13 @@ module.exports = ({THREE}) => {
         .add(position);
     }
 
-    getUnrelativePoint(point) {
+    /* getUnrelativePoint(point) {
       const {position, quaternion} = this;
       return point.clone()
         .sub(position)
         .applyQuaternion(quaternion)
         .add(position);
-    }
+    } */
 
     intersectLine(line) {
       const {start, end} = line;
@@ -53,7 +53,7 @@ module.exports = ({THREE}) => {
     containsPoint(point) {
       return this.box.containsPoint(this.getRelativePoint(point));
     }
-  } */
+  }
 
   class PlaneTarget {
     constructor(position, quaternion, scale, width, height) {
@@ -720,8 +720,8 @@ module.exports = ({THREE}) => {
     );
   };
 
-  /* const makeBoxTarget = (position, rotation, scale, size) => new BoxTarget(position, rotation, scale, size);
-  const makeBoxTargetOffset = (position, rotation, scale, start, end) => {
+  const makeBoxTarget = (position, rotation, scale, size) => new BoxTarget(position, rotation, scale, size);
+  /* const makeBoxTargetOffset = (position, rotation, scale, start, end) => {
     const topLeft = position.clone().add(
       start.clone().multiply(scale).applyQuaternion(rotation)
     );
@@ -740,7 +740,7 @@ module.exports = ({THREE}) => {
     concatBufferGeometry,
     // sliceBufferGeometry,
     makeControllerLine,
-    // makeBoxTarget,
+    makeBoxTarget,
     // makeBoxTargetOffset,
     makePlaneTarget,
   };
